@@ -30,6 +30,4 @@ Este portfólio foi desenvolvido para ser um cartão de visitas digital, onde re
 
 📬 Contato
 
-💼 LinkedIn
-
-📧 tainara@email.com
+📧 tainaramartinscarvalho@gmail.com
