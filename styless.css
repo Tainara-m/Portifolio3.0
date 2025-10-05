@@ -8,11 +8,11 @@
     src: url(assets/ERASMD.TTF) format(truetype);
 }
 
-:root{
-    --gold: #F0AE0B;
-    --blue: #065F6A;
-    --black: #000000;
-    --transition: all 0.3s ease;
+:root {
+  --gold: #FFC107; /* dourado mais claro e legível */
+  --blue: #046C7A; /* azul mais vibrante */
+  --black: #000000;
+  --transition: all 0.3s ease;
 }
 
 *{
@@ -46,12 +46,33 @@ section{
     min-width: 0;
     box-sizing: border-box;
     padding: 0;
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
     scroll-behavior: smooth;
     scroll-snap-type: y mandatory;
     scroll-padding-top: 60px;
 }
+
+h2 {
+  font-size: clamp(1.8rem, 2vw, 3rem);
+}
+
+p {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+}
+
+#btn:hover, .btn:hover {
+  background: var(--gold);
+  color: var(--black);
+  transform: scale(1.05);
+}
+/*Animação de fade-in e slide-up*/
+
+a:focus, button:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
 
 .hidden {
   opacity: 0;
@@ -89,7 +110,8 @@ section{
 }
 
 .sidebar.collapsed {
-  width: 80px;
+  width: 60px;
+  min-width: 60px;
 }
 
 .sidebar .header {
@@ -140,16 +162,17 @@ section{
 
 .menu-item:hover,
 .menu-item.active {
-  background: var(--gold);
-  color: #ffffff;
+  background: transparent; /* Remove o fundo colorido */
+  color: #ffffff; /* Mantém a cor branca do ícone */
+}
+
+.menu-item {
+  color: var(--gold);
+  transition: color 0.3s ease; /* Suaviza a transição da cor */
 }
 
 .menu-item span {
   transition: opacity 0.2s ease;
-}
-
-.menu-item{
-  color: var(--gold);
 }
 
 .sidebar.collapsed .menu-item span {
@@ -179,7 +202,8 @@ section{
 
 .toggle-theme:hover,
 .toggle-sidebar:hover {
-  background: rgba(0,0,0,0.05);
+  background: transparent; /* Remove o fundo dos botões também */
+  color: #ffffff; /* Muda apenas a cor do ícone */
 }
 
 .toggle-theme span,
@@ -234,14 +258,13 @@ input[type="checkbox"]:checked::before {
   padding: 40px;
   transition: margin-left 0.3s ease;
   font-size: 24px; 
-  line-height: 1.8;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
 }
 
 .sidebar.collapsed ~ .main-content {
-  margin-left: 70px;
+  margin-left: 60px; /* Largura da sidebar colapsada */
 }
 
 /*Sessão de Introdução*/
@@ -274,20 +297,72 @@ input[type="checkbox"]:checked::before {
     z-index: -1; /* Fica atrás do texto */
 }
 
-#intro #logo{
+#intro #perfil {
   width: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 60% 40% 35% 65% / 55% 40% 60% 45%;
+  box-shadow: 0 0 20px rgba(240, 174, 11, 0.6);
+  background: linear-gradient(135deg, #ca991b, var(--gold) 80%, transparent 100%);
+  padding: 6px;
+  transition: transform 0.4s ease, border-radius 0.6s ease;
+}
+
+#intro #perfil:hover {
+  border-radius: 40% 60% 50% 50% / 50% 60% 40% 50%;
+  transform: scale(1.05);
 }
 
 #intro .welcome-message{
   font-family: 'bold';
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  gap: 5px;
+  margin-left: 20px;
+}
+
+h1{
+  font-size: 48px;
+  color: var(--blue);
+  text-shadow: 2px 2px #f0af0baf;
+  margin-top: 20px;
+}
+
+#intro .welcome-message p{
+  font-family: 'bold';
+  font-size: 28px;
+  color: var(--blue);
+  text-shadow: 1px 1px #0000005d;
+}
+
+.welcome-message a{
+  font-family: 'bold';
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--blue);
+  background-color: var(--gold);
+  padding: 10px 20px;
+  border-radius: 30px;
+  box-shadow: 0 2px 8px #00000010;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.welcome-message a:hover{
+  background-color: var(--blue);
+  color: var(--gold);
+  transform: scale(1.05);
+}
+
+#slogan{
+  font-family: 'bold';
+  font-size: 26px;
+  color: var(--blue);
+  text-shadow: 2px 2px 4px #df9b08ad;
+  display: flex;
+  margin-left: 250px;
 }
 
 /* Fundo animado */
@@ -462,6 +537,7 @@ input[type="checkbox"]:checked::before {
   width: 60%;
   max-width: 1200px;
   margin: 0 auto;
+  gap: 20px;
 }
 
 .card {
@@ -534,6 +610,10 @@ input[type="checkbox"]:checked::before {
   scale: 0;
 }
 
+.card:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
 .card__description {
   font-family: 'normal';
   text-align: justify;
@@ -581,63 +661,89 @@ input[type="checkbox"]:checked::before {
 }
 
 /*Sessão com as habilidades, separadas em habilidades técnicas e comportamentais*/
-#skills{
+/* === AJUSTE COMPLETO DA SEÇÃO SKILLS === */
+#skills {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   background-image: url(assets/bannerdourado.png);
   background-size: cover;
-  background-repeat: norepeat;
-  gap: 20px;
+  background-repeat: no-repeat;
+  padding: 60px 20px;
+  gap: 40px;
+  text-align: center;
+  min-height: 100vh;
 }
 
-#skills h2{
+/* Título centralizado */
+#skills h2 {
   font-family: 'bold';
-  font-size: 48px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  font-size: clamp(2rem, 3vw, 3rem);
+  color: var(--blue);
   text-shadow: 2px 2px #065e6a71;
+  margin-bottom: 10px;
 }
 
-.blur{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background: rgba(255, 255, 255, 0.15); /* fundo semitransparente */
-    backdrop-filter: blur(10px);            /* desfoca só o que está atrás */
-    -webkit-backdrop-filter: blur(10px);    /* suporte para Safari */
-    width: 500px;
-    height: 200px;
-    line-height: normal;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: justify;
+/* Container de Hard e Soft Skills */
+#skills-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+  width: 100%;
+  max-width: 1000px;
 }
 
-#skills h3{
+/* Blocos individuais */
+#skills .blur {
+  flex: 1 1 400px;
+  max-width: 450px;
+  min-width: 280px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 25px;
+  box-sizing: border-box;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#skills .blur:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Títulos internos */
+#skills h3 {
   font-family: 'bold';
   font-size: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-shadow: 2px 2px #065e6a71;
-  text-align: center;
+  color: var(--blue);
+  margin-bottom: 10px;
 }
 
-#skills dt{
+/* Textos */
+#skills dt {
   font-family: 'normal';
   font-size: 18px;
-  display: flex;
   color: var(--blue);
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  line-height: 1;
+}
+
+/* Responsividade mobile */
+@media (max-width: 900px) {
+  #skills-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  #skills .blur {
+    width: 90%;
+    max-width: 400px;
+  }
 }
 
 #exp{
@@ -827,108 +933,106 @@ input[type="checkbox"]:checked::before {
   align-items: center;
 }
 
-#contato{
-  background-image: url(assets/So-You-Want-to-Be-a…-Web-Developer-R.jpg);
-  background-size: cover;
-  background-repeat: norepeat;
-  overflow: hidden;
+#contato {
+  background: linear-gradient(180deg, var(--blue) 70%, var(--black) 100%);
+  color: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
 }
 
-#logoc{
-  width: 150px;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-#contato h2{
+#contato h2 {
   font-family: 'bold';
-  font-size: 48px;
+  font-size: clamp(2rem, 3vw, 3rem);
   color: var(--gold);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-shadow: 2px 2px #f0af0baf;
+  text-shadow: 2px 2px #065e6a71;
 }
 
-#contato h4{
+#contato h4 {
   font-family: 'normal';
   font-size: 16px;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-#contato form{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-#contato label{
-  width: 300px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-family: 'normal';
-  font-weight: bold;
-  text-align: center;
-  color: gold;
-  gap: 10px;
-}
-
-#contato input, #contato textarea{
-  width: 300px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-family: 'normal';
-  text-align: center;
-  gap: 10px;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  font-family: 'bold';
-  text-decoration: none;
-  background: var(--blue);
-  color: #ffffff;
-  border-radius: 30px;
-  box-shadow: 0 2px 8px #ffffff86;
-  transition: background 0.3s;
-  cursor: pointer;
-  font-size: 15px; /* aumenta o tamanho do texto */
-  min-width: 250px; /* largura mínima para evitar quebra */
-  text-align: center;
-}
-
-.social-media{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
   margin-bottom: 20px;
 }
 
-.social-media i{
+#contato p {
+  font-family: 'normal';
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+#contato form {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 25px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 400px;
+}
+
+#contato label {
+  font-family: 'bold';
   color: var(--gold);
-  font-size: 45px;
+  text-align: left;
+  font-size: 14px;
+}
+
+#contato input,
+#contato textarea {
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-family: 'normal';
+  font-size: 14px;
+  resize: none;
+  margin-top: 5px;
+  transition: box-shadow 0.3s;
+}
+
+#contato input:focus,
+#contato textarea:focus {
+  outline: none;
+  box-shadow: 0 0 5px var(--gold);
+}
+
+.btn {
+  background: var(--gold);
+  color: var(--black);
+  font-family: 'bold';
+  border: none;
+  border-radius: 30px;
+  padding: 12px;
+  cursor: pointer;
+  transition: transform 0.3s, background 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  background: #FFD54F;
+}
+
+.social-media {
+  display: flex;
+  gap: 20px;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+.social-media i {
+  font-size: 36px;
+  color: var(--gold);
+  transition: transform 0.3s, color 0.3s;
+}
+
+.social-media i:hover {
+  transform: scale(1.2);
+  color: white;
 }
 
 /* --- Responsividade geral --- */
@@ -1022,4 +1126,245 @@ img, svg {
 /* --- Scroll horizontal seguro --- */
 body, html {
   overflow-x: hidden;
+}
+
+/* === BOTÃO HAMBURGUER === */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: var(--blue);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 22px;
+  padding: 8px 12px;
+  cursor: pointer;
+  z-index: 1100;
+  transition: var(--transition);
+}
+.hamburger:hover {
+  background: var(--gold);
+  color: var(--black);
+}
+
+/* === AJUSTES PARA MOBILE === */
+@media (max-width: 900px) {
+  .sidebar {
+    display: none;
+  }
+  .hamburger {
+    display: block;
+  }
+  .menu-item i {
+    display: none; /* remove ícones no mobile */
+  }
+  .menu-item {
+    justify-content: flex-start;
+    font-size: 14px;
+  }
+}
+
+/* Sidebar colapsada por padrão */
+.sidebar {
+  width: 60px;
+  min-width: 60px;
+  /* outras propriedades existentes */
+}
+
+.sidebar .header .info,
+.sidebar .menu-item span,
+.sidebar .toggle-theme span,
+.sidebar .toggle-sidebar span {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+/* Sidebar expandida quando a classe 'expanded' for adicionada */
+.sidebar.expanded {
+  width: 220px;
+  min-width: 220px;
+}
+
+.sidebar.expanded .header .info,
+.sidebar.expanded .menu-item span,
+.sidebar.expanded .toggle-theme span,
+.sidebar.expanded .toggle-sidebar span {
+  opacity: 1;
+  width: auto;
+}
+
+/* Centraliza ícones quando colapsada */
+.sidebar:not(.expanded) .menu-item {
+  justify-content: center;
+}
+
+/* === TEMA ESCURO APRIMORADO (FORÇADO) === */
+body.dark {
+  background: #0d1a1f !important;
+  color: #eaeaea !important;
+}
+
+body.dark .sidebar {
+  background: #032d35 !important;
+  color: #f5d67a !important;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.6) !important;
+}
+
+body.dark .menu-item {
+  color: #f5d67a !important;
+}
+
+body.dark .menu-item:hover,
+body.dark .menu-item.active {
+  background: #0e3e47 !important;
+  color: #fff !important;
+}
+
+body.dark #intro {
+  background: linear-gradient(180deg, #0e3e47 0%, #081b1e 100%) !important;
+  color: #f5f5f5 !important;
+}
+
+body.dark #intro #perfil {
+  box-shadow: 0 0 25px rgba(255, 215, 100, 0.5) !important;
+  background: linear-gradient(135deg, #f5d67a, #b98e09) !important;
+}
+
+body.dark #intro h1,
+body.dark #intro p,
+body.dark #intro #perfil h2,
+body.dark #intro #perfil p {
+  color: #f5f5f5 !important;
+}
+
+body.dark #contato {
+  background: linear-gradient(180deg, #03181c 60%, #01090b 100%) !important;
+  color: #fff !important;
+}
+
+body.dark input,
+body.dark textarea {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark .btn {
+  background: #f5d67a !important;
+  color: #032d35 !important;
+}
+
+body.dark .btn:hover {
+  background: #ffe27b !important;
+  color: #032d35 !important;
+}
+
+/* --- CORREÇÕES GERAIS --- */
+
+/* Impede a faixa branca lateral */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* As seções agora ocupam toda a largura real da tela */
+section {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Quando o menu está colapsado ou escondido no mobile */
+body.menu-fechado #sidebar {
+  display: none !important;
+}
+
+body.menu-fechado main,
+body.menu-fechado section {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+/* --- BOTÃO HAMBURGUER VISÍVEL --- */
+.hamburger {
+  display: flex !important;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: var(--blue);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 22px;
+  padding: 8px 12px;
+  cursor: pointer;
+  z-index: 2000; /* acima da sidebar */
+  transition: var(--transition);
+}
+.hamburger:hover {
+  background: var(--gold);
+  color: var(--black);
+}
+
+/* Sidebar sempre escondida no mobile até ser ativada */
+@media (max-width: 900px) {
+  .sidebar {
+    display: none;
+    position: fixed;
+    height: 100vh;
+    z-index: 1500;
+  }
+
+  main, section {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
+
+/* Quando a sidebar é aberta no mobile */
+body.menu-aberto .sidebar {
+  display: flex !important;
+  animation: aparecer 0.3s ease forwards;
+}
+
+@keyframes aparecer {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Mostra o botão apenas em telas menores */
+.hamburger {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .hamburger {
+    display: flex !important;
+  }
+}
+
+/* === Foco visível apenas quando navega por teclado === */
+.user-tabbing a:focus,
+.user-tabbing button:focus,
+.user-tabbing input:focus,
+.user-tabbing textarea:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+a:focus,
+button:focus,
+input:focus,
+textarea:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
 }
